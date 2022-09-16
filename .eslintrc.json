@@ -1,0 +1,112 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "jest": true
+  },
+  "extends": [
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended",
+    "plugin:react-hooks/recommended",
+    "airbnb",
+    "prettier"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": [
+    "react",
+    "@typescript-eslint",
+    "eslint-plugin-import-helpers",
+    "prettier"
+  ],
+  "rules": {
+    "prettier/prettier": ["error", {
+      "endOfLine": "auto"
+    }],
+    "no-param-reassign": ["error", { 
+      "props": false
+    }],
+    "no-restricted-syntax": [
+      "off"
+    ],
+    "no-use-before-define": [
+      "error",
+      {
+        "functions": false
+      }
+    ],
+    "react/react-in-jsx-scope": "off",
+    "react/require-default-props": "off",
+    "react/jsx-no-bind": [
+      0
+    ],
+    "react/jsx-no-constructed-context-values": "off",
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [
+          ".ts",
+          ".tsx"
+        ]
+      }
+    ],
+    "react/jsx-props-no-spreading": [
+      1,
+      {
+        "custom": "ignore"
+      }
+    ],
+    "import/no-extraneous-dependencies": [ 
+      "error", 
+      {
+        "devDependencies": [
+          "**/*.spec.tsx", 
+          "**/*.spec.ts", 
+          "**/setupTests.ts",
+          "**/vite.config.ts"
+        ]
+      }
+    ],
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "ts": "never",
+        "tsx": "never"
+      }
+    ],
+    "import/prefer-default-export": "off",
+    "import-helpers/order-imports": [
+      "warn",
+      {
+        "newlinesBetween": "always",
+        "groups": [
+          "/^react(?!-)/",
+          "module",
+          "/^~//",
+          [
+            "parent",
+            "sibling",
+            "index"
+          ]
+        ],
+        "alphabetize": {
+          "order": "asc",
+          "ignoreCase": true
+        }
+      }
+    ]
+  },
+  "settings": {
+    "import/resolver": {
+      "typescript": {}
+    }
+  }
+}
