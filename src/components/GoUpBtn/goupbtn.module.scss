@@ -1,0 +1,17 @@
+.goUpBtn {
+  position: fixed;
+  right: 5%;
+  background: var(--blue);
+  color: var(--gold);
+  border: none;
+  border-radius: 50%;
+  font-size: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all ease .2s;
+  
+  .goUpIcon {
+    filter: invert(100%) sepia(72%) saturate(5098%) brightness(100%);
+  }
+}
