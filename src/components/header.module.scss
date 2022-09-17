@@ -1,0 +1,44 @@
+.header {
+  height: 75px;
+  background: var(--red);
+
+  .content {
+    max-width: 1180px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .searchField {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      input {
+        border-radius: .25rem;
+        border: 1px solid transparent;
+        padding: .5rem 0;
+        padding-left: .5rem;
+        padding-right: 1.5rem;
+        transition: border ease-in .2s;
+
+        &:focus {
+          border: 1px solid black;
+        }
+      }
+
+      .searchImg {
+        margin-left: -1.5rem;
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+
+  .pokeLogo {
+    margin: 0 .5rem ;
+    width: 120px;
+    height: 70px;
+  }
+}
+
