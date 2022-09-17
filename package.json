@@ -2,11 +2,22 @@
   "name": "boilerplate",
   "private": true,
   "version": "0.0.0",
+  "lint-staged": {
+    "*.ts": [
+      "npx eslint . --fix"
+    ],
+    "*.tsx": [
+      "npx eslint . --fix",
+      "jest --bail --runInBand --findRelatedTests"
+    ]
+  },
   "scripts": {
     "dev": "vite",
     "test": "jest --coverage",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "npx eslint . --fix",
+    "prepare": "husky install"
   },
   "dependencies": {
     "react": "^18.2.0",
@@ -34,9 +45,11 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.30.1",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "husky": "^8.0.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^29.0.3",
     "jest-environment-jsdom": "^29.0.3",
+    "lint-staged": "^13.0.3",
     "prettier": "^2.7.1",
     "sass": "^1.54.9",
     "typescript": "^4.6.4",
