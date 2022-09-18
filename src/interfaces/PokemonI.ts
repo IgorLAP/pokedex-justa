@@ -30,6 +30,15 @@ export interface PokemonI {
   name: string;
   sprites: {
     front_default: string | null;
+    versions: {
+      "generation-v": {
+        "black-white": {
+          animated: {
+            front_default: string | null;
+          };
+        };
+      };
+    };
   };
   types: PokemonType[];
 }

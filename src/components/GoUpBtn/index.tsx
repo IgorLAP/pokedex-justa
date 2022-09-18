@@ -13,7 +13,7 @@ export function GoUpBtn({ show }: GoUpBtnProps) {
 
   return (
     <button
-      style={{ bottom: show ? "15%" : "-20%" }}
+      style={{ bottom: show ? "5%" : "-20%" }}
       className={styles.goUpBtn}
       type="button"
       onClick={handleGoUp}
