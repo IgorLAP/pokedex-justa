@@ -45,7 +45,6 @@ export function PokeCard({ pokemon, loading }: PokeCardProps) {
   return (
     <div
       style={{
-        color: typeName === "dark" || typeName === "bug" ? "white" : "",
         backgroundColor: putColor(typeName),
         border: typeName === "ghost" ? "1px solid rgba(0, 0, 0, .2)" : "",
         opacity: loading ? ".6" : "1",
@@ -53,11 +52,15 @@ export function PokeCard({ pokemon, loading }: PokeCardProps) {
       className={styles.card}
     >
       <img className={styles.starIcon} alt="favorite" src={starIcon} />
-      {pokemon.sprites.front_default ? (
+      {pokemon.sprites.versions["generation-v"]["black-white"].animated
+        .front_default || pokemon.sprites.front_default ? (
         <img
           className={styles.pokeImg}
           alt={pokemon.name}
-          src={pokemon.sprites.front_default}
+          src={
+            pokemon.sprites.versions["generation-v"]["black-white"].animated
+              .front_default ?? (pokemon.sprites.front_default as string)
+          }
         />
       ) : (
         <div className={styles.unknownPokemon}>
