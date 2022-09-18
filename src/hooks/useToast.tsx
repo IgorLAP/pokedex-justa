@@ -14,7 +14,7 @@ export function useToast() {
       }, 250)
     );
     return () => clearInterval(intervalId);
-  }, []);
+  }, [intervalId]);
 
   function showToast(type: "error" | "success" | "warn", message: string) {
     return toast[type](message, {
@@ -28,7 +28,7 @@ export function useToast() {
       pauseOnFocusLoss: true,
       draggable: true,
       style: {
-        background: type === "warn" ? "#D69E2E" : "",
+        background: type === "warn" ? "#ffcc00" : "",
         fontSize: inResponsiveMode ? ".8rem" : "",
         width: inResponsiveMode ? "240px" : "",
         height: inResponsiveMode ? "65px" : "",

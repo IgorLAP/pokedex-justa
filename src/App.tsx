@@ -6,6 +6,7 @@ import { Dashboard } from "~/components/Dashboard";
 import { GoUpBtn } from "~/components/GoUpBtn";
 import { Header } from "~/components/Header";
 
+import { FavoriteProvider } from "./contexts/FavoriteContext";
 import { SearchProvider } from "./contexts/SearchContext";
 
 import "./styles/App.scss";
@@ -25,12 +26,14 @@ function App() {
 
   return (
     <SearchProvider>
-      <Header isHeaderFix={hasScroll} />
-      <main>
-        <Dashboard />
-      </main>
-      <GoUpBtn show={hasScroll} />
-      <ToastContainer />
+      <FavoriteProvider>
+        <Header isHeaderFix={hasScroll} />
+        <main>
+          <Dashboard />
+        </main>
+        <GoUpBtn show={hasScroll} />
+        <ToastContainer />
+      </FavoriteProvider>
     </SearchProvider>
   );
 }

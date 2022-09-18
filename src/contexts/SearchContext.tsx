@@ -57,38 +57,38 @@ export function SearchProvider({ children }: { children: React.ReactNode }) {
       if (!search && resultList.length === 0) setLoading(false);
     }, 500);
 
-    async function handleSearch() {
-      setLoading(true);
-      try {
-        const result: ResultsOrPokemon = await searchPokemon(
-          search,
-          isType(search) ? "type" : "name"
-        );
-        if (result.length === 0) {
-          toast("error", "Pokemon or type not found");
-          setResultList([]);
-        }
-        if (!isPokemon(result)) {
-          const endpoints: string[] = [];
-          result.forEach((pokemon) => endpoints.push(pokemon.url));
-          const responseList = await axios.all(
-            endpoints.map((endpoint) => axios.get<PokemonI>(endpoint))
-          );
-          const pokemonList = responseList.map((i) => i.data);
-          setResultList(pokemonList);
-        }
-        if (isPokemon(result)) {
-          setResultList(result);
-        }
-      } catch (err) {
-        setResultList([]);
-        toast("error", "Something went wrong");
-      }
-      setLoading(false);
-    }
-
     return () => clearTimeout(timerId);
   }, [search]);
+
+  async function handleSearch() {
+    setLoading(true);
+    try {
+      const result: ResultsOrPokemon = await searchPokemon(
+        search,
+        isType(search) ? "type" : "name"
+      );
+      if (result.length === 0) {
+        toast("error", "Pokemon or type not found");
+        setResultList([]);
+      }
+      if (!isPokemon(result)) {
+        const endpoints: string[] = [];
+        result.forEach((pokemon) => endpoints.push(pokemon.url));
+        const responseList = await axios.all(
+          endpoints.map((endpoint) => axios.get<PokemonI>(endpoint))
+        );
+        const pokemonList = responseList.map((i) => i.data);
+        setResultList(pokemonList);
+      }
+      if (isPokemon(result)) {
+        setResultList(result);
+      }
+    } catch (err) {
+      setResultList([]);
+      toast("error", "Something went wrong");
+    }
+    setLoading(false);
+  }
 
   function isPokemon(result: ResultsOrPokemon): result is PokemonI[] {
     if ((result as PokemonI[])[0]?.id) {

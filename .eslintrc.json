@@ -33,6 +33,7 @@
     "prettier/prettier": ["error", {
       "endOfLine": "auto"
     }],
+    "@typescript-eslint/no-unused-vars": "error",
     "no-param-reassign": ["error", { 
       "props": false
     }],
