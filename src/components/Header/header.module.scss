@@ -1,5 +1,10 @@
 header {
   height: 75px;
+  top: -20%;
+  right: 0;
+  left: 0;
+  z-index: 9;
+  transition: all ease .5s;
   background: var(--red);
 
   .content {

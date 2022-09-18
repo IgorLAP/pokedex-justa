@@ -1,31 +1,37 @@
 import { useEffect, useState } from "react";
 
+import { ToastContainer } from "react-toastify";
+
 import { Dashboard } from "~/components/Dashboard";
 import { GoUpBtn } from "~/components/GoUpBtn";
 import { Header } from "~/components/Header";
 
+import { SearchProvider } from "./contexts/SearchContext";
+
 import "./styles/App.scss";
+import "react-toastify/dist/ReactToastify.min.css";
 
 function App() {
-  const [showGoUp, setShowGoUp] = useState(false);
+  const [hasScroll, setHasScroll] = useState(false);
 
   useEffect(() => {
-    const timerId = setInterval(() => {
-      if (window.scrollY >= 300) setShowGoUp(true);
-      if (window.scrollY <= 300) setShowGoUp(false);
+    const intervalId = setInterval(() => {
+      if (window.scrollY >= 300) setHasScroll(true);
+      if (window.scrollY <= 300) setHasScroll(false);
     }, 250);
 
-    return () => clearInterval(timerId);
+    return () => clearInterval(intervalId);
   }, []);
 
   return (
-    <>
-      <Header />
+    <SearchProvider>
+      <Header isHeaderFix={hasScroll} />
       <main>
         <Dashboard />
       </main>
-      <GoUpBtn show={showGoUp} />
-    </>
+      <GoUpBtn show={hasScroll} />
+      <ToastContainer />
+    </SearchProvider>
   );
 }
 
