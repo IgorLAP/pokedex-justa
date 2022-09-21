@@ -1,4 +1,4 @@
-export type PokemonTypeName =
+export type PokemonTypeNameI =
   | "grass"
   | "fire"
   | "ground"
@@ -20,7 +20,7 @@ export type PokemonTypeName =
 
 interface PokemonType {
   type: {
-    name: PokemonTypeName;
+    name: PokemonTypeNameI;
     url: string;
   };
 }

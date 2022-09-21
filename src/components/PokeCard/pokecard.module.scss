@@ -12,16 +12,25 @@
     filter: brightness(.9);
   }
 
-  .starIcon {
+  .starBtn {
     position: absolute;
     cursor: pointer;
     top: 0;
     right: 10px;
-    filter: invert(100%);
-    transition: all ease-in .2s;
-    
-    &:hover {
-      filter: invert(100%) sepia(72%) saturate(5098%) brightness(100%);
+    background: transparent;
+    border: none;
+
+    .starIcon {
+      filter: invert(100%);
+      transition: all ease-in .2s;
+      width: 30px;
+      height: 30px;
+      
+      &:hover {
+        filter: invert(100%) sepia(72%) saturate(5098%) brightness(100%);
+        width: 35px;
+        height: 35px;
+      }
     }
   }
 

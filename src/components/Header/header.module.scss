@@ -1,6 +1,5 @@
 header {
   height: 75px;
-  top: -20%;
   right: 0;
   left: 0;
   z-index: 9;
@@ -13,6 +12,23 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    .rightSide {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .favoritesLink {
+        text-decoration: none;
+        color: var(--gold);
+        font-weight: bold;
+        margin-right: .5rem;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
 
     .searchField {
       display: flex;
@@ -65,14 +81,22 @@ header {
     .content {
       flex-direction: column;
 
+      .rightSide {
+        flex-direction: column;
+
+        .favoritesLink {
+          margin-bottom: 1rem;
+        }
+      }
+
       .searchField {
         width: 260px;
       }
     }
 
     .pokeLogo {
-      width: 180px;
-      height: 100px;
+      width: 150px;
+      height: 80px;
     }
   }
 }

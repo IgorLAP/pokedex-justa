@@ -53,21 +53,22 @@ export function Dashboard() {
     }
   }
 
-  function getList(offset?: number) {
-    getPokemons(offset)
-      .then(async (response) => {
-        setNextPage(response.next);
-        setPreviousPage(response.previous);
-        const endpoints: string[] = [];
-        response.results.forEach((pokemon) => endpoints.push(pokemon.url));
-        const responseList = await axios.all(
-          endpoints.map((endpoint) => axios.get<PokemonI>(endpoint))
-        );
-        const pokemonList = responseList.map((i) => i.data);
-        setList(pokemonList);
-        setLoading(false);
-      })
-      .catch(() => toast("error", "Something went wrong"));
+  async function getList(offset?: number) {
+    try {
+      const { next, previous, results } = await getPokemons(offset);
+      setNextPage(next);
+      setPreviousPage(previous);
+      const endpoints: string[] = [];
+      results.forEach((pokemon) => endpoints.push(pokemon.url));
+      const responseList = await axios.all(
+        endpoints.map((endpoint) => axios.get<PokemonI>(endpoint))
+      );
+      const pokemonList = responseList.map((i) => i.data);
+      setList(pokemonList);
+      setLoading(false);
+    } catch (err) {
+      toast("error", "Something went wrong");
+    }
   }
 
   return (
@@ -112,7 +113,11 @@ export function Dashboard() {
           ))}
         </div>
       )}
-      {list.length <= 0 && <p>Carregando...</p>}
+      {list.length <= 0 && (
+        <div className={styles.loading}>
+          <img alt="loading" src="/pikachu-gif.gif" />
+        </div>
+      )}
     </div>
   );
 }
