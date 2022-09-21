@@ -32,6 +32,7 @@ export function Favorites() {
   }, [favList]);
 
   async function handle() {
+    if (favList.length === 0) return;
     setLoading(true);
     try {
       const responseList = await axios.all(
