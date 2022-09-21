@@ -25,6 +25,19 @@
   }
 }
 
+.loading {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: calc(100vh - 250px);
+
+  img {
+    width: 120px;
+  }
+}
+
 @media screen and (max-width: 1280px) {
   .gridArea {
     grid-template-columns: repeat(4, 1fr);

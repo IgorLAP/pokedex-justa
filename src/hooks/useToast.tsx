@@ -14,7 +14,7 @@ export function useToast() {
       }, 250)
     );
     return () => clearInterval(intervalId);
-  }, [intervalId]);
+  }, []);
 
   function showToast(type: "error" | "success" | "warn", message: string) {
     return toast[type](message, {

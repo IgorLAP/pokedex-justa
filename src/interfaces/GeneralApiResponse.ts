@@ -1,11 +1,11 @@
-export interface Results {
+export interface NameAndUrlI {
   name: string;
   url: string;
 }
 
-export interface GeneralApiResponse {
+export interface GeneralApiResponseI {
   count: number;
   next: string | null;
   previous: string | null;
-  results: Results[];
+  results: NameAndUrlI[];
 }

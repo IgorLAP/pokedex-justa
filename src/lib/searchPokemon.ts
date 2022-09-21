@@ -1,14 +1,14 @@
 import axios from "axios";
 
-import { GeneralApiResponse } from "~/interfaces/GeneralApiResponse";
+import { GeneralApiResponseI } from "~/interfaces/GeneralApiResponse";
 import { PokemonI } from "~/interfaces/PokemonI";
 import { api } from "~/services/api";
 
 export async function searchPokemon(query: string, filterBy: "name" | "type") {
-  const { data } = await api.get<GeneralApiResponse>("/pokemon", {
+  const { data } = await api.get<GeneralApiResponseI>("/pokemon", {
     params: { limit: 1 },
   });
-  const { data: allData } = await api.get<GeneralApiResponse>("/pokemon", {
+  const { data: allData } = await api.get<GeneralApiResponseI>("/pokemon", {
     params: { limit: data.count },
   });
   if (filterBy === "name") {

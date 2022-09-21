@@ -1,7 +1,5 @@
 import React, { useState, createContext } from "react";
 
-import { useToast } from "~/hooks/useToast";
-
 interface FavoriteInitialValue {
   favList: number[];
   setFavList: React.Dispatch<React.SetStateAction<number[]>>;
@@ -15,9 +13,13 @@ export const FavoriteContext =
   createContext<FavoriteInitialValue>(initialValue);
 
 export function FavoriteProvider({ children }: { children: React.ReactNode }) {
-  const [favList, setFavList] = useState<number[]>([]);
-
-  const toast = useToast();
+  const [favList, setFavList] = useState<number[]>(() => {
+    const hasFavorites = localStorage.getItem("favorites");
+    if (hasFavorites) {
+      return JSON.parse(hasFavorites);
+    }
+    return [];
+  });
 
   function handleFavorite(pokeId: number) {
     const hasFavorites = localStorage.getItem("favorites");
@@ -26,8 +28,8 @@ export function FavoriteProvider({ children }: { children: React.ReactNode }) {
       const alreadyHas = favorites.filter((id) => id === pokeId);
       if (alreadyHas.length > 0) {
         const removedList = favorites.filter((id) => id !== pokeId);
-        setFavList(removedList);
         localStorage.setItem("favorites", JSON.stringify(removedList));
+        setFavList(removedList);
         return;
       }
       favorites.push(pokeId);
@@ -37,7 +39,6 @@ export function FavoriteProvider({ children }: { children: React.ReactNode }) {
       setFavList([pokeId]);
       localStorage.setItem("favorites", JSON.stringify([pokeId]));
     }
-    toast("success", "Added to your favorites");
   }
 
   function checkFavorite(pokeId: number): string {

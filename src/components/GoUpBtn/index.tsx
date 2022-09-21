@@ -1,5 +1,3 @@
-import goUpIcon from "~/assets/goUpIcon.svg";
-
 import styles from "./goupbtn.module.scss";
 
 interface GoUpBtnProps {
@@ -18,7 +16,11 @@ export function GoUpBtn({ show }: GoUpBtnProps) {
       type="button"
       onClick={handleGoUp}
     >
-      <img className={styles.goUpIcon} alt="go up" src={goUpIcon} />
+      <img
+        className={styles.goUpIcon}
+        alt="go up"
+        src="/src/assets/goUpIcon.svg"
+      />
     </button>
   );
 }

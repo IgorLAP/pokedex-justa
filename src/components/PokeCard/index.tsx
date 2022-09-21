@@ -1,8 +1,7 @@
 import { useContext } from "react";
 
-import starIcon from "~/assets/starIcon.svg";
 import { FavoriteContext } from "~/contexts/FavoriteContext";
-import { PokemonI, PokemonTypeName } from "~/interfaces/PokemonI";
+import { PokemonI, PokemonTypeNameI } from "~/interfaces/PokemonI";
 
 import styles from "./pokecard.module.scss";
 
@@ -11,7 +10,7 @@ interface PokeCardProps {
   loading: boolean;
 }
 
-const types: Record<PokemonTypeName, string> = {
+const types: Record<PokemonTypeNameI, string> = {
   grass: "#77cc55",
   fire: "#fd4422",
   ground: "#ddbb55",
@@ -35,7 +34,7 @@ const types: Record<PokemonTypeName, string> = {
 export function PokeCard({ pokemon, loading }: PokeCardProps) {
   const { checkFavorite, handleFavorite } = useContext(FavoriteContext);
 
-  function putColor(type: PokemonTypeName): string {
+  function putColor(type: PokemonTypeNameI): string {
     const pokemonTypes = Object.keys(types);
     for (const pokeType of pokemonTypes) {
       if (pokeType === type) {
@@ -55,6 +54,7 @@ export function PokeCard({ pokemon, loading }: PokeCardProps) {
         opacity: loading ? ".6" : "1",
       }}
       className={styles.card}
+      data-testid="card"
     >
       <button
         type="button"
@@ -64,7 +64,7 @@ export function PokeCard({ pokemon, loading }: PokeCardProps) {
         <img
           alt="favorite"
           className={styles.starIcon}
-          src={starIcon}
+          src="/src/assets/starIcon.svg"
           style={{
             filter: checkFavorite(pokemon.id),
           }}
