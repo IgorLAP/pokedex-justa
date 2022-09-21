@@ -67,7 +67,7 @@ export function Dashboard() {
       setList(pokemonList);
       setLoading(false);
     } catch (err) {
-      toast("error", "Erro");
+      toast("error", "Something went wrong");
     }
   }
 

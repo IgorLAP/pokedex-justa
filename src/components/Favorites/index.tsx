@@ -44,7 +44,7 @@ export function Favorites() {
       setLoading(false);
     } catch (err) {
       setLoading(false);
-      toast("error", "Error loading favorites");
+      toast("error", "Error loading your favorites pokemons");
     }
   }
 
