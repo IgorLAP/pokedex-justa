@@ -1,0 +1,102 @@
+.container {
+  margin: 2.25rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  h1 {
+    font-weight: bold;
+    color: white;
+    text-shadow: 1px 1px 1px #000;
+  }
+}
+
+.starBtn {
+  align-self: flex-end;
+  margin-right: 5rem;
+  cursor: pointer;
+  height: 35px;
+  width: 45px;
+  border: 1px solid var(--gold);
+
+  .starIcon {
+    filter: invert(100%);
+    transition: all ease-in .2s;
+    width: 30px;
+    height: 30px;
+    
+    &:hover {
+      filter: invert(100%) sepia(72%) saturate(5098%) brightness(100%);
+    }
+  }
+}
+
+.content {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+
+  .leftSide {
+    img {
+      width: 420px;
+    }
+  }
+
+  .rightSide {
+    width: 250px;    
+  }
+}
+
+.stats {
+  .barStat {
+    height: 25px;
+    border: 1px solid black;
+    border-radius: .25rem;
+    background: transparent;
+    width: 100%;
+
+    .bar {
+      height: 100%;
+      color: white;
+      text-shadow: 1px 1px 1px #000;
+      padding-left: .25rem;
+      padding-top: .1rem;
+    }
+  }
+
+  .nameStat {
+    margin-bottom: .25rem;
+  }
+
+  &+.stats {
+    margin: 1rem 0;
+  }
+}
+
+@media screen and (max-width: 760px) {
+  .content {
+    flex-direction: column;
+
+    .leftSide {
+      img {
+        width: 320px;
+      }
+    }
+  }
+
+  .starBtn {
+    margin-top: 1.25rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .content {
+    .leftSide {
+      img {
+        width: 240px;
+      }
+    }
+  }
+}

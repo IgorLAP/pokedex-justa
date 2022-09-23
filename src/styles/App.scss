@@ -5,7 +5,7 @@
 }
 
 :root {
-  --white: #e9dddd;
+  --background: #e9dddd;
   --red: #EF5350;
   --gold: #ffcc00;
   --blue: #1c5bab;
@@ -24,13 +24,20 @@ html {
 }
 
 body {
-  background: var(--white);
+  background: var(--background);
   font-family: "Roboto", sans-serif;
+
+  #root {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100vh;
+  }
 }
 
 main {
   max-width: 1180px;
   margin: 0 auto;
+  width: 100%;
 }
 
 button {
