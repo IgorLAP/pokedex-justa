@@ -18,7 +18,7 @@ export type PokemonTypeNameI =
   | "flying"
   | "ghost";
 
-interface PokemonType {
+interface PokemonTypeI {
   type: {
     name: PokemonTypeNameI;
     url: string;
@@ -40,5 +40,30 @@ export interface PokemonI {
       };
     };
   };
-  types: PokemonType[];
+  types: PokemonTypeI[];
+}
+
+type StatNameI =
+  | "hp"
+  | "attack"
+  | "defense"
+  | "special-attack"
+  | "special-defense"
+  | "speed";
+
+export interface PokemonDetailsI extends Omit<PokemonI, "sprites"> {
+  sprites: {
+    other: {
+      "official-artwork": {
+        front_default: string;
+      };
+    };
+  };
+  stats: {
+    base_stat: number;
+    effort: 0 | 1;
+    stat: {
+      name: StatNameI;
+    };
+  }[];
 }

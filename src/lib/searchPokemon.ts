@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import { GeneralApiResponseI } from "~/interfaces/GeneralApiResponse";
-import { PokemonI } from "~/interfaces/PokemonI";
+import { PokemonI } from "~/interfaces/Pokemon";
 import { api } from "~/services/api";
 
 export async function searchPokemon(query: string, filterBy: "name" | "type") {

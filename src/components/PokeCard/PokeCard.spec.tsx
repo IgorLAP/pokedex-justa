@@ -1,9 +1,15 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 
 import { FavoriteContext } from "~/contexts/FavoriteContext";
-import { pokemon } from "~/tests/mswServer";
+import { pokemonSample } from "~/lib/helpers";
 
 import { PokeCard } from ".";
+
+const mockedUseNavigate = jest.fn();
+jest.mock("react-router-dom", () => ({
+  ...jest.requireActual("react-router-dom"),
+  useNavigate: () => mockedUseNavigate,
+}));
 
 describe("PokeCard component", () => {
   it("renders correctly", () => {
@@ -16,7 +22,7 @@ describe("PokeCard component", () => {
           } as any
         }
       >
-        <PokeCard loading={false} pokemon={pokemon} />
+        <PokeCard loading={false} pokemon={pokemonSample} />
       </FavoriteContext.Provider>
     );
     const pokeName = screen.getByText(/fake-name/i);
@@ -34,12 +40,11 @@ describe("PokeCard component", () => {
           } as any
         }
       >
-        <PokeCard loading={false} pokemon={pokemon} />
+        <PokeCard loading={false} pokemon={pokemonSample} />
       </FavoriteContext.Provider>
     );
-
-    const starBtn = screen.getByRole("button", { name: /favorite/i });
-    fireEvent.click(starBtn);
+    const starBtn = screen.getAllByRole("button", { name: /favorite/i });
+    fireEvent.click(starBtn[1]);
     expect(handleFavMock).toHaveBeenCalled();
   });
 
@@ -53,7 +58,7 @@ describe("PokeCard component", () => {
           } as any
         }
       >
-        <PokeCard loading pokemon={pokemon} />
+        <PokeCard loading pokemon={pokemonSample} />
       </FavoriteContext.Provider>
     );
     const card = screen.getByTestId("card");

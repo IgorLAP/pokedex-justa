@@ -1,7 +1,9 @@
 import { useContext } from "react";
 
+import { useNavigate } from "react-router-dom";
+
 import { FavoriteContext } from "~/contexts/FavoriteContext";
-import { PokemonI, PokemonTypeNameI } from "~/interfaces/PokemonI";
+import { PokemonI, PokemonTypeNameI } from "~/interfaces/Pokemon";
 
 import styles from "./pokecard.module.scss";
 
@@ -34,6 +36,8 @@ const types: Record<PokemonTypeNameI, string> = {
 export function PokeCard({ pokemon, loading }: PokeCardProps) {
   const { checkFavorite, handleFavorite } = useContext(FavoriteContext);
 
+  const navigate = useNavigate();
+
   function putColor(type: PokemonTypeNameI): string {
     const pokemonTypes = Object.keys(types);
     for (const pokeType of pokemonTypes) {
@@ -54,11 +58,19 @@ export function PokeCard({ pokemon, loading }: PokeCardProps) {
         opacity: loading ? ".6" : "1",
       }}
       className={styles.card}
+      role="button"
+      tabIndex={0}
+      onClick={(e) => {
+        if ((e.target as HTMLImageElement).alt === "favorite") return;
+        navigate(`/details/${pokemon.id}`);
+      }}
+      onKeyDown={() => navigate(`/details/${pokemon.id}`)}
       data-testid="card"
     >
       <button
         type="button"
         className={styles.starBtn}
+        style={{ padding: "20" }}
         onClick={() => handleFavorite(pokemon.id)}
       >
         <img

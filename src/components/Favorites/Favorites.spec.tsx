@@ -10,6 +10,7 @@ import { Favorites } from ".";
 startMswServer();
 
 jest.mock("react-toastify");
+jest.mock("react-router-dom");
 
 describe("Favorites component", () => {
   beforeEach(() => {
@@ -67,7 +68,7 @@ describe("Favorites component", () => {
       </FavoriteContext.Provider>
     );
     await waitFor(() =>
-      expect(screen.getByText(/lista vazia/i)).toBeInTheDocument()
+      expect(screen.getByText(/no favorites yet/i)).toBeInTheDocument()
     );
   });
 

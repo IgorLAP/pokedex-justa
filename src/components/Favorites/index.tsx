@@ -2,10 +2,11 @@ import { useContext, useEffect, useState } from "react";
 
 import axios from "axios";
 
+import { Loading } from "~/components/Loading";
 import { PokeCard } from "~/components/PokeCard";
 import { FavoriteContext } from "~/contexts/FavoriteContext";
 import { useToast } from "~/hooks/useToast";
-import { PokemonI } from "~/interfaces/PokemonI";
+import { PokemonI } from "~/interfaces/Pokemon";
 
 import styles from "./favorites.module.scss";
 
@@ -58,13 +59,9 @@ export function Favorites() {
         </div>
       )}
       {favList.length === 0 && !loading && (
-        <h1 className={styles.emptyList}>Lista vazia</h1>
+        <h1 className={styles.emptyList}>No favorites yet</h1>
       )}
-      {favorites.length === 0 && loading && (
-        <div className={styles.loading}>
-          <img alt="loading" src="/pikachu-gif.gif" />
-        </div>
-      )}
+      {favorites.length === 0 && loading && <Loading />}
     </>
   );
 }

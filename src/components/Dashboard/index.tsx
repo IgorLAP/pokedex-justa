@@ -2,10 +2,11 @@ import { useContext, useEffect, useState } from "react";
 
 import axios from "axios";
 
+import { Loading } from "~/components/Loading";
 import { PokeCard } from "~/components/PokeCard";
 import { SearchContext } from "~/contexts/SearchContext";
 import { useToast } from "~/hooks/useToast";
-import { PokemonI } from "~/interfaces/PokemonI";
+import { PokemonI } from "~/interfaces/Pokemon";
 import { getPokemons } from "~/lib/getPokemons";
 
 import styles from "./dashboard.module.scss";
@@ -67,6 +68,7 @@ export function Dashboard() {
       setList(pokemonList);
       setLoading(false);
     } catch (err) {
+      setLoading(false);
       toast("error", "Something went wrong");
     }
   }
@@ -77,18 +79,18 @@ export function Dashboard() {
         <>
           <div className={styles.pagination}>
             <button
-              disabled={!previousPage}
+              disabled={!previousPage || loading}
               type="button"
               onClick={() => handlePagination("previousPage")}
             >
-              Voltar
+              Previous
             </button>
             <button
-              disabled={!nextPage}
+              disabled={!nextPage || loading}
               type="button"
               onClick={() => handlePagination("nextPage")}
             >
-              Avançar
+              Next
             </button>
           </div>
           <div className={styles.gridArea}>
@@ -113,11 +115,7 @@ export function Dashboard() {
           ))}
         </div>
       )}
-      {list.length <= 0 && (
-        <div className={styles.loading}>
-          <img alt="loading" src="/pikachu-gif.gif" />
-        </div>
-      )}
+      {list.length === 0 && resultList.length === 0 && <Loading />}
     </div>
   );
 }

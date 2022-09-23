@@ -20,7 +20,7 @@ export function Header({ isHeaderFix }: HeaderProps) {
   const favCount = favList.length;
 
   function handleSearch(input: string) {
-    if (window.location.pathname === "/favorites" && input !== "") {
+    if (window.location.pathname !== "/" && input !== "") {
       navigate("/");
     }
     setSearch(input);
