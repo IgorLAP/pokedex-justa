@@ -4,6 +4,9 @@
     "es2021": true,
     "jest": true
   },
+  "globals": {
+    "NodeJS": true
+  },
   "extends": [
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
@@ -30,6 +33,7 @@
     "prettier/prettier": ["error", {
       "endOfLine": "auto"
     }],
+    "@typescript-eslint/no-unused-vars": "error",
     "no-param-reassign": ["error", { 
       "props": false
     }],
@@ -69,7 +73,7 @@
         "devDependencies": [
           "**/*.spec.tsx", 
           "**/*.spec.ts", 
-          "**/setupTests.ts",
+          "src/tests/**.ts",
           "**/vite.config.ts"
         ]
       }
