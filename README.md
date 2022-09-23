@@ -57,7 +57,6 @@
     - axios
     - react-router-dom
     - react-toastify
-    - context api
     
   - Padronização do código:
     - eslint
@@ -68,6 +67,8 @@
   - Ambiente de testes:
     - jest
     - babel
+    - identity-obj-proxy
+    - jest-svg-transformer
     - msw (Mock Service Worker)
     
   - Deploy:

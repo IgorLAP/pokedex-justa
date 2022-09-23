@@ -2,6 +2,7 @@ import { useContext } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
 
+import searchIcon from "~/assets/searchIcon.svg";
 import { FavoriteContext } from "~/contexts/FavoriteContext";
 import { SearchContext } from "~/contexts/SearchContext";
 
@@ -53,11 +54,7 @@ export function Header({ isHeaderFix }: HeaderProps) {
               disabled={isTypeSearch}
               onChange={(e) => handleSearch(e.target.value)}
             />
-            <img
-              className={styles.searchImg}
-              alt="search"
-              src="/src/assets/searchIcon.svg"
-            />
+            <img className={styles.searchImg} alt="search" src={searchIcon} />
           </div>
         </div>
       </div>

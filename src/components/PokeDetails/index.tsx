@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 
 import { useNavigate, useParams } from "react-router-dom";
 
+import starIcon from "~/assets/starIcon.svg";
 import { Loading } from "~/components/Loading";
 import { FavoriteContext } from "~/contexts/FavoriteContext";
 import { useToast } from "~/hooks/useToast";
@@ -53,7 +54,7 @@ export function PokeDetails() {
             <img
               alt="favorite"
               className={styles.starIcon}
-              src="/src/assets/starIcon.svg"
+              src={starIcon}
               style={{
                 filter: checkFavorite(pokemon.id),
               }}

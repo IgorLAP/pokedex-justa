@@ -2,6 +2,7 @@ import { useContext } from "react";
 
 import { useNavigate } from "react-router-dom";
 
+import starIcon from "~/assets/starIcon.svg";
 import { FavoriteContext } from "~/contexts/FavoriteContext";
 import { PokemonI, PokemonTypeNameI } from "~/interfaces/Pokemon";
 
@@ -76,7 +77,7 @@ export function PokeCard({ pokemon, loading }: PokeCardProps) {
         <img
           alt="favorite"
           className={styles.starIcon}
-          src="/src/assets/starIcon.svg"
+          src={starIcon}
           style={{
             filter: checkFavorite(pokemon.id),
           }}
