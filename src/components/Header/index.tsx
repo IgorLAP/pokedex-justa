@@ -39,7 +39,7 @@ export function Header({ isHeaderFix }: HeaderProps) {
           <img
             className={styles.pokeLogo}
             alt="pokemon logo"
-            src="https://logosmarcas.net/wp-content/uploads/2020/05/Pokemon-Logo.png"
+            src="https://external-preview.redd.it/tQged7mKJ3cUpNMq5IMeceZvyKP3cTyHqhNmKEQ0Vv8.png?width=640&crop=smart&auto=webp&s=5fc89334e792e2c9b294d1d328bf522cdede4cdf"
           />
         </Link>
         <div className={styles.rightSide}>

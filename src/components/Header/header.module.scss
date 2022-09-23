@@ -5,6 +5,8 @@ header {
   z-index: 9;
   transition: all ease .5s;
   background: var(--red);
+  display: flex;
+  align-items: center;
 
   .content {
     max-width: 1180px;
@@ -12,6 +14,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
 
     .rightSide {
       display: flex;
@@ -58,9 +61,9 @@ header {
   }
 
   .pokeLogo {
-    margin: 0 .5rem ;
-    width: 120px;
-    height: 70px;
+    margin: 0 .5rem;
+    width: 150px;
+    height: 60px;
   }
 }
 
@@ -75,8 +78,7 @@ header {
 @media screen and (max-width: 560px) {
   header {
     height: fit-content;
-    padding-top: .25rem;
-    padding-bottom: 2rem;
+    padding-bottom: 1rem;
 
     .content {
       flex-direction: column;
@@ -85,7 +87,7 @@ header {
         flex-direction: column;
 
         .favoritesLink {
-          margin-bottom: 1rem;
+          margin-bottom: .5rem;
         }
       }
 
@@ -96,7 +98,8 @@ header {
 
     .pokeLogo {
       width: 150px;
-      height: 80px;
+      height: 60px;
+      margin-top: .3rem;
     }
   }
 }

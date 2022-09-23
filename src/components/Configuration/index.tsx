@@ -14,7 +14,9 @@ import "react-toastify/dist/ReactToastify.min.css";
 
 export function Configuration() {
   const [hasScroll, setHasScroll] = useState(false);
-  const [intervalId, setIntervalId] = useState<NodeJS.Timer>();
+  const [intervalId, setIntervalId] = useState<NodeJS.Timer | undefined>(
+    undefined
+  );
 
   const location = useLocation();
 
@@ -23,13 +25,20 @@ export function Configuration() {
     if (!detailsPage) {
       setIntervalId(
         setInterval(() => {
-          if (window.scrollY >= 300) setHasScroll(true);
-          if (window.scrollY <= 300) setHasScroll(false);
+          if (window.scrollY >= 650) setHasScroll(true);
+          if (window.scrollY < 649) setHasScroll(false);
         }, 250)
       );
     }
+
+    if (detailsPage) {
+      setHasScroll(false);
+      clearInterval(intervalId);
+      setIntervalId(undefined);
+    }
+
     return () => {
-      if (intervalId) clearTimeout(intervalId);
+      if (intervalId) clearInterval(intervalId);
     };
   }, [location.pathname]);
 
