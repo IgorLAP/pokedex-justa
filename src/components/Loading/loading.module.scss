@@ -1,0 +1,13 @@
+.loading {
+  margin-top: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: calc(100vh - 250px);
+
+  img {
+    width: 120px;
+  }
+}

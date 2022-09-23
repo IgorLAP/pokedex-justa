@@ -4,7 +4,8 @@ import axios from "axios";
 
 import { useToast } from "~/hooks/useToast";
 import { NameAndUrlI } from "~/interfaces/GeneralApiResponse";
-import { PokemonI, PokemonTypeNameI } from "~/interfaces/PokemonI";
+import { PokemonI } from "~/interfaces/Pokemon";
+import { typesList } from "~/lib/helpers";
 import { searchPokemon } from "~/lib/searchPokemon";
 
 interface SearchInitialValue {
@@ -20,29 +21,6 @@ const initialValue = {} as SearchInitialValue;
 export const SearchContext = createContext<SearchInitialValue>(initialValue);
 
 type NameAndUrlIOrPokemonI = NameAndUrlI[] | PokemonI[];
-
-const types: Record<PokemonTypeNameI, string> = {
-  grass: "#77cc55",
-  fire: "#fd4422",
-  ground: "#ddbb55",
-  poison: "#aa5599",
-  electric: "#ffcc32",
-  water: "#3399ff",
-  fairy: "#ee99ee",
-  rock: "#bbaa66",
-  normal: "#aaaa99",
-  ice: "#66ccff",
-  psychic: "#fc549a",
-  dark: "#775544",
-  dragon: "#7766ee",
-  fighting: "#bb5545",
-  steel: "#aeaebe",
-  bug: "#aabb22",
-  flying: "#8899ff",
-  ghost: "#6566bb",
-};
-
-const typeList = Object.keys(types);
 
 export function SearchProvider({ children }: { children: React.ReactNode }) {
   const [search, setSearch] = useState("");
@@ -71,7 +49,7 @@ export function SearchProvider({ children }: { children: React.ReactNode }) {
     setLoading(true);
     try {
       const result: NameAndUrlIOrPokemonI = await searchPokemon(
-        search,
+        search.trim(),
         isType(search) ? "type" : "name"
       );
       if (result.length === 0) {
@@ -94,7 +72,7 @@ export function SearchProvider({ children }: { children: React.ReactNode }) {
       }
     } catch (err) {
       finishSearch([]);
-      toast("error", "Something went wrong");
+      toast("error", "Error in your search");
     }
   }
 
@@ -111,8 +89,8 @@ export function SearchProvider({ children }: { children: React.ReactNode }) {
   }
 
   function isType(query: string) {
-    for (const i of typeList) {
-      if (query.toLowerCase() === i) return true;
+    for (const i of typesList) {
+      if (query.trim().toLowerCase() === i) return true;
     }
     return false;
   }

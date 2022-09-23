@@ -7,6 +7,8 @@
   cursor: pointer;
   padding: .5rem 0;
   border-radius: .5rem;
+  min-width: 210px;
+  height: 210px;
 
   &:hover {
     filter: brightness(.9);
@@ -34,6 +36,11 @@
     }
   }
 
+  .pokeImg {
+    max-width: 80px;
+    max-height: 80px;
+  }
+
   .unknownPokemon {
     width: 96px;
     height: 96px;
@@ -50,7 +57,7 @@
   .pokemonName {
     margin-top: .5rem;
     font-weight: bold;
-    color: var(--white);
+    color: var(--background);
     text-shadow: 0 10px 12px #000;
   }
 
@@ -101,7 +108,7 @@
 
   .card {
     .mobileDesc {
-      color: var(--white);
+      color: var(--background);
       text-shadow: 0 10px 12px #000;
       font-weight: 500;
       margin: .25rem;

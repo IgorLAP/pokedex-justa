@@ -1,0 +1,34 @@
+.container {
+  margin: .5rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.links {
+  display: flex;
+}
+
+.link {
+  text-decoration: none;
+  color: var(--blue);
+  font-weight: bold;
+  display: inline-block;
+  margin-right: .5rem;
+  margin-top: .5rem;
+
+  &:first-child {
+    color: #000;
+  }
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  img {
+    width: 20px;
+    height: 20px;
+    margin: 0 .25rem;
+  }
+}

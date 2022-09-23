@@ -4,8 +4,9 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { toast } from "react-toastify";
 
 import { SearchContext, SearchProvider } from "~/contexts/SearchContext";
+import { pokemonSample } from "~/lib/helpers";
 import { searchPokemon } from "~/lib/searchPokemon";
-import { pokemon, startMswServer } from "~/tests/mswServer";
+import { startMswServer } from "~/tests/mswServer";
 
 startMswServer();
 
@@ -102,7 +103,7 @@ describe("Search Context", () => {
         <TestComponent />
       </SearchProvider>
     );
-    (searchPokemon as jest.Mock).mockResolvedValueOnce([pokemon]);
+    (searchPokemon as jest.Mock).mockResolvedValueOnce([pokemonSample]);
     const input = screen.getByRole("textbox");
     fireEvent.change(input, { target: { value: "bug" } });
     await waitFor(() => expect(screen.getByText(/bug/i)).toBeInTheDocument());

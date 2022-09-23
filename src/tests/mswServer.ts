@@ -1,32 +1,17 @@
 import { rest } from "msw";
 import { setupServer } from "msw/node";
 
-import { PokemonI } from "~/interfaces/PokemonI";
-
-export const pokemon: PokemonI = {
-  id: 1,
-  name: "fake-name",
-  sprites: {
-    front_default: "/pokeball.png",
-    versions: {
-      "generation-v": {
-        "black-white": { animated: { front_default: "/pokeball.png" } },
-      },
-    },
-  },
-  types: [
-    {
-      type: { name: "bug", url: "/pokeball.png" },
-    },
-  ],
-};
+import { pokemonSample, pokemonDetailSample } from "~/lib/helpers";
 
 export const server = setupServer(
   rest.get("http://localhost/fake-url", (req, res, ctx) =>
-    res(ctx.status(200), ctx.json([{ data: { ...pokemon } }]))
+    res(ctx.status(200), ctx.json([{ data: { ...pokemonSample } }]))
   ),
   rest.get("https://pokeapi.co/api/v2/pokemon/2", (req, res, ctx) =>
-    res(ctx.status(200), ctx.json({ ...pokemon }))
+    res(ctx.status(200), ctx.json({ ...pokemonSample }))
+  ),
+  rest.get("https://pokeapi.co/api/v2/pokemon/1", (req, res, ctx) =>
+    res(ctx.status(200), ctx.json({ ...pokemonDetailSample }))
   ),
   rest.get("*", (req, res, ctx) =>
     res(ctx.status(500), ctx.json({ error: "Request not registered" }))

@@ -21,20 +21,11 @@
     background: var(--blue);
     border-radius: .25rem;
     border: none;
-    color: var(--white);
-  }
-}
+    color: #FFF;
 
-.loading {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: calc(100vh - 250px);
-
-  img {
-    width: 120px;
+    &:nth-child(2) {
+      padding: 0 1.3rem;
+    }
   }
 }
 
