@@ -1,15 +1,15 @@
 import { useContext, useEffect, useState } from "react";
 
-import axios from "axios";
-
 import { Loading } from "~/presentation/components/Loading";
 import { PokeCard } from "~/presentation/components/PokeCard";
 import { SearchContext } from "~/presentation/contexts/SearchContext";
-import { useToast } from "~/presentation/hooks/useToast";
-import { PokemonI } from "~/presentation/interfaces/Pokemon";
-import { getPokemons } from "~/presentation/lib/getPokemons";
+
+import { AxiosHttpClient } from "~/infra/http";
+import { ReactToastifyAdapter } from "~/infra/notify";
+import { ListPokemonAppl } from "~/core/application";
 
 import styles from "./dashboard.module.scss";
+import { Pokemon } from "~/core/use-cases";
 
 export function Dashboard() {
   const {
@@ -18,12 +18,14 @@ export function Dashboard() {
     loading: searchLoading,
   } = useContext(SearchContext);
 
-  const [list, setList] = useState<PokemonI[]>([]);
+  const [list, setList] = useState<Pokemon[]>([]);
   const [nextPage, setNextPage] = useState<string | null>("");
   const [previousPage, setPreviousPage] = useState<string | null>("");
   const [loading, setLoading] = useState(false);
 
-  const toast = useToast();
+  const { notify } = new ReactToastifyAdapter();
+  const httpRequest = new AxiosHttpClient();
+  const request = new ListPokemonAppl('pokemon', httpRequest);
 
   useEffect(() => {
     getList();
@@ -35,7 +37,7 @@ export function Dashboard() {
   }, [search]);
 
   useEffect(() => {
-    if (resultList.length === 0) setLoading(false);
+    if (!resultList.length) setLoading(false);
   }, [resultList]);
 
   function handlePagination(direction: "previousPage" | "nextPage") {
@@ -56,21 +58,34 @@ export function Dashboard() {
 
   async function getList(offset?: number) {
     try {
-      const { next, previous, results } = await getPokemons(offset);
-      setNextPage(next);
-      setPreviousPage(previous);
-      const endpoints: string[] = [];
-      results.forEach((pokemon) => endpoints.push(pokemon.url));
-      const responseList = await axios.all(
-        endpoints.map((endpoint) => axios.get<PokemonI>(endpoint))
-      );
-      const pokemonList = responseList.map((i) => i.data);
-      setList(pokemonList);
+      const data = await request.list({ limit: 100 })
+      setList(data);
       setLoading(false);
     } catch (err) {
       setLoading(false);
-      toast("error", "Something went wrong");
+      notify({ 
+        message: 'Alguma coisa de errado aconteceu', 
+        messageStatus: 'error' 
+      })
     }
+
+
+    // try {
+    //   const { next, previous, results } = await getPokemons(offset);
+    //   setNextPage(next);
+    //   setPreviousPage(previous);
+    //   const endpoints: string[] = [];
+    //   results.forEach((pokemon) => endpoints.push(pokemon.url));
+    //   const responseList = await axios.all(
+    //     endpoints.map((endpoint) => axios.get<PokemonI>(endpoint))
+    //   );
+    //   const pokemonList = responseList.map((i) => i.data);
+    //   setList(pokemonList);
+    //   setLoading(false);
+    // } catch (err) {
+    //   setLoading(false);
+    //   toast("error", "Something went wrong");
+    // }
   }
 
   return (

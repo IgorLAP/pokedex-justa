@@ -4,12 +4,13 @@ import { useNavigate } from "react-router-dom";
 
 import starIcon from "~/assets/starIcon.svg";
 import { FavoriteContext } from "~/presentation/contexts/FavoriteContext";
-import { PokemonI, PokemonTypeNameI } from "~/presentation/interfaces/Pokemon";
+import { PokemonTypeNameI } from "~/presentation/interfaces/Pokemon";
 
 import styles from "./pokecard.module.scss";
+import { Pokemon } from "~/core/use-cases";
 
 interface PokeCardProps {
-  pokemon: PokemonI;
+  pokemon: Pokemon;
   loading: boolean;
 }
 
@@ -48,8 +49,7 @@ export function PokeCard({ pokemon, loading }: PokeCardProps) {
     }
     return "";
   }
-
-  const typeName = pokemon.types[0].type.name;
+  const typeName = pokemon.types[0];
 
   return (
     <div
@@ -83,14 +83,12 @@ export function PokeCard({ pokemon, loading }: PokeCardProps) {
           }}
         />
       </button>
-      {pokemon.sprites.versions["generation-v"]["black-white"].animated
-        .front_default || pokemon.sprites.front_default ? (
+      {pokemon.image ? (
         <img
           className={styles.pokeImg}
           alt={pokemon.name}
           src={
-            pokemon.sprites.versions["generation-v"]["black-white"].animated
-              .front_default ?? (pokemon.sprites.front_default as string)
+            pokemon.image
           }
         />
       ) : (
@@ -108,16 +106,16 @@ export function PokeCard({ pokemon, loading }: PokeCardProps) {
       </p>
       <div className={styles.pokeTypes}>
         {pokemon.types.map((type) => (
-          <div key={type.type.name} className={styles.info}>
+          <div key={type} className={styles.info}>
             <img
               className={styles.type}
-              alt={type.type.name}
-              src={`type/${type.type.name}.webp`}
+              alt={type}
+              src={`type/${type}.webp`}
             />
             <div className={styles.tooltip}>
-              <span className={styles.tooltipText}>{type.type.name}</span>
+              <span className={styles.tooltipText}>{type}</span>
             </div>
-            <div className={styles.mobileDesc}>{type.type.name}</div>
+            <div className={styles.mobileDesc}>{type}</div>
           </div>
         ))}
       </div>
