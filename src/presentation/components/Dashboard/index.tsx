@@ -11,81 +11,68 @@ import { ListPokemonAppl } from "~/core/application";
 import styles from "./dashboard.module.scss";
 import { Pokemon } from "~/core/use-cases";
 
+const LIMIT = 100;
+const API_URL = import.meta.env.VITE_API_URL;
+
 export function Dashboard() {
+  // Hooks
   const {
     search,
     resultList,
     loading: searchLoading,
   } = useContext(SearchContext);
 
+  // States
   const [list, setList] = useState<Pokemon[]>([]);
   const [nextPage, setNextPage] = useState<string | null>("");
   const [previousPage, setPreviousPage] = useState<string | null>("");
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [offset, setOffset] = useState(0);
 
+  // Instâncias
   const { notify } = new ReactToastifyAdapter();
   const httpRequest = new AxiosHttpClient();
   const request = new ListPokemonAppl('pokemon', httpRequest);
 
+  // Effects
   useEffect(() => {
     getList();
-  }, []);
+  }, [offset]);
 
   useEffect(() => {
-    if (search) setLoading(true);
-    if (!search) setLoading(false);
+    if (search) setIsLoading(true);
+    if (!search) setIsLoading(false);
   }, [search]);
 
   useEffect(() => {
-    if (!resultList.length) setLoading(false);
+    if (!resultList.length) setIsLoading(false);
   }, [resultList]);
 
-  function handlePagination(direction: "previousPage" | "nextPage") {
-    setLoading(true);
-    if (nextPage && direction === "nextPage") {
-      const query = nextPage.split("offset")[1].split("&")[0];
-      const offset = query.substring(1, query?.length);
-      getList(Number(offset));
-      return;
-    }
-
-    if (previousPage && direction === "previousPage") {
-      const query = previousPage.split("offset")[1].split("&")[0];
-      const offset = query.substring(1, query?.length);
-      getList(Number(offset));
-    }
+  // Functions
+  function handlePagination(apiLimit: number | null) {
+    const prev = `${API_URL}pokemon?offset=${offset - LIMIT}&limit=${apiLimit}`;
+    const next = `${API_URL}pokemon?offset=${offset + LIMIT}&limit=${apiLimit}`;
+    setPreviousPage(offset ? prev : null);
+    setNextPage(apiLimit ? next : null);
   }
 
-  async function getList(offset?: number) {
-    try {
-      const data = await request.list({ limit: 100 })
-      setList(data);
-      setLoading(false);
-    } catch (err) {
-      setLoading(false);
-      notify({ 
-        message: 'Alguma coisa de errado aconteceu', 
-        messageStatus: 'error' 
-      })
+  async function getList() {
+    setIsLoading(true);
+    const list = await request.list({ limit: LIMIT, offset });
+    
+    if (list.isLeft()) {
+      setIsLoading(false);
+      notify({
+        message: list.value.message,
+        messageStatus: 'error',
+      });
     }
 
-
-    // try {
-    //   const { next, previous, results } = await getPokemons(offset);
-    //   setNextPage(next);
-    //   setPreviousPage(previous);
-    //   const endpoints: string[] = [];
-    //   results.forEach((pokemon) => endpoints.push(pokemon.url));
-    //   const responseList = await axios.all(
-    //     endpoints.map((endpoint) => axios.get<PokemonI>(endpoint))
-    //   );
-    //   const pokemonList = responseList.map((i) => i.data);
-    //   setList(pokemonList);
-    //   setLoading(false);
-    // } catch (err) {
-    //   setLoading(false);
-    //   toast("error", "Something went wrong");
-    // }
+    if (list.isRight()) {
+      setList(list.value.data);
+      setIsLoading(false);
+      handlePagination(list.value.limit);
+    }
   }
 
   return (
@@ -94,16 +81,16 @@ export function Dashboard() {
         <>
           <div className={styles.pagination}>
             <button
-              disabled={!previousPage || loading}
+              disabled={!previousPage || isLoading}
               type="button"
-              onClick={() => handlePagination("previousPage")}
+              onClick={() => setOffset(prev => prev -= LIMIT)}
             >
               Previous
             </button>
             <button
-              disabled={!nextPage || loading}
+              disabled={!nextPage || isLoading}
               type="button"
-              onClick={() => handlePagination("nextPage")}
+              onClick={() => setOffset(prev => prev += LIMIT)}
             >
               Next
             </button>
@@ -112,7 +99,7 @@ export function Dashboard() {
             {list.map((pokemon) => (
               <PokeCard
                 key={pokemon.id}
-                loading={loading || searchLoading}
+                loading={isLoading || searchLoading}
                 pokemon={pokemon}
               />
             ))}

@@ -1,6 +1,6 @@
 import { ListPokemonUseCase, Pokemon } from "../use-cases";
-import { HttpStatusCode, HttpGetClient } from "~/interface-adapters/http";
-import { ServiceUnavailableError, UnexpectedError } from "../errors";
+import { HttpGetClient, HttpResponse } from "~/interface-adapters/http";
+import { right } from "../errors";
 
 export class ListPokemonAppl implements ListPokemonUseCase {  
   constructor(
@@ -8,13 +8,18 @@ export class ListPokemonAppl implements ListPokemonUseCase {
     private readonly HttpGetClient: HttpGetClient<Pokemon[]>
   ) {}
 
-  async list(params?: any): Promise<Pokemon[]> {
+  async list(params?: any): Promise<HttpResponse<Pokemon[]>> {
     const httpResponse = await this.HttpGetClient.get({ url: this.url, requestParams: params });
 
-    switch(httpResponse.statusCode) {
-      case HttpStatusCode.ok: return httpResponse.data
-      case HttpStatusCode.internalServerError: throw new ServiceUnavailableError()
-      default: throw new UnexpectedError()
+    
+    if (httpResponse.isLeft()) {
+      return httpResponse;
     }
+
+    return right({
+      data: httpResponse.value.data,
+      statusCode: httpResponse.value.statusCode,
+      limit: httpResponse.value.limit,
+    });
   }
 }

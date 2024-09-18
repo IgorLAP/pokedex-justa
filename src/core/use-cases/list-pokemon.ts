@@ -1,3 +1,5 @@
+import { HttpResponse } from "~/interface-adapters/http";
+
 export type PokemonTypeNameI =
   | "grass"
   | "fire"
@@ -27,5 +29,5 @@ export type Pokemon = {
 }
 
 export interface ListPokemonUseCase {
-  list: () => Promise<Pokemon[]>;
+  list: () => Promise<HttpResponse<Pokemon[]>>;
 }
