@@ -28,6 +28,11 @@ export type Pokemon = {
   isFavorite: boolean;
 }
 
+export type ListPokemonParams = {
+  request?: any,
+  callback?: (response: any) => Promise<HttpResponse<any>>;
+}
+
 export interface ListPokemonUseCase {
-  list: () => Promise<HttpResponse<Pokemon[]>>;
+  list: (params: ListPokemonParams) => Promise<HttpResponse<Pokemon[]>>;
 }

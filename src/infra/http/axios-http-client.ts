@@ -20,28 +20,14 @@ export class AxiosHttpClient implements HttpGetClient<Pokemon[]> {
           new UnexpectedError()
         );
     }
-      
-    const endpoints: string[] = [];
-    response.data.results.forEach((pokemon: any) => endpoints.push(pokemon.url));
-    const responseList = await axios.all(
-      endpoints.map((endpoint) => axios.get(endpoint))
-    );
 
-    const data: Pokemon[] = responseList.map((response) => {
-      return {
-        id: response.data.id,
-        image: response.data.sprites.versions["generation-v"]["black-white"]?.animated
-        .front_default || response.data.sprites.front_default || response.data.sprites.front_shiny,
-        isFavorite: false,
-        name: response.data.name,
-        types: response.data.types.map((type: any) => type.type.name),
-      }
-    });
+    const limit = response.data.next ? Number(response.data.next.split('limit=')[1]) : null;
+    const statusCode = response.status;
 
     return right({
-      statusCode: response.status,
-      data,
-      limit: response.data.next ? Number(response.data.next.split('limit=')[1]) : null,
-    })
+      data: response.data,
+      statusCode,
+      limit,
+    });
   }
 }

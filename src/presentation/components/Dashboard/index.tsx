@@ -7,9 +7,10 @@ import { SearchContext } from "~/presentation/contexts/SearchContext";
 import { AxiosHttpClient } from "~/infra/http";
 import { ReactToastifyAdapter } from "~/infra/notify";
 import { ListPokemonAppl } from "~/core/application";
+import { Pokemon } from "~/core/use-cases";
+import { listAllPokemons } from "~/packages/poke-api/callbacks";
 
 import styles from "./dashboard.module.scss";
-import { Pokemon } from "~/core/use-cases";
 
 const LIMIT = 100;
 const API_URL = import.meta.env.VITE_API_URL;
@@ -33,6 +34,7 @@ export function Dashboard() {
   const { notify } = new ReactToastifyAdapter();
   const httpRequest = new AxiosHttpClient();
   const request = new ListPokemonAppl('pokemon', httpRequest);
+  const listAllCb = new listAllPokemons();
 
   // Effects
   useEffect(() => {
@@ -58,7 +60,10 @@ export function Dashboard() {
 
   async function getList() {
     setIsLoading(true);
-    const list = await request.list({ limit: LIMIT, offset });
+    const list = await request.list({ 
+      request: { limit: LIMIT, offset }, 
+      callback: listAllCb.listAll },
+    );
     
     if (list.isLeft()) {
       setIsLoading(false);

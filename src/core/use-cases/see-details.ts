@@ -1,3 +1,5 @@
+import { HttpResponse } from "~/interface-adapters/http";
+
 export type PokemonDetails = {
   image: string;
   name: string;
@@ -13,5 +15,5 @@ export type PokemonDetails = {
 }
 
 export interface SeePokemonDetailsUseCase {
-  seeDetails: (pokemonId: number) => Promise<PokemonDetails>;
+  seeDetails: (pokemonId: number) => Promise<HttpResponse<PokemonDetails>>;
 }
